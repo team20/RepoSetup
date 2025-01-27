@@ -4,40 +4,34 @@ Instructions also exist at https://docs.wpilib.org/en/latest/docs/zero-to-robot/
 
 ## Making the project
 
-Open up the Command Palette (Ctrl + Shift + P)
-
-Search up `WPILib: Create a new project` and hit it.
-
-Select the template project type, use Java, then select `Command Robot Skeleton (Advanced)`.
-
-Choose a folder to place your project in.
-
-Choose a project name.
-
-Put in your team number (20).
-
-Check the `Enable Desktop Support` checkbox.
-
-Click `Generate Project`.
-
-Open the folder and trust all the authors.
+1. Open up the Command Palette (Ctrl + Shift + P)
+2. Search up `WPILib: Create a new project` and hit it.
+3. Select the template project type, use Java, then select `Command Robot Skeleton (Advanced)`.
+4. Choose a folder to place your project in.
+5. Choose a project name.
+6. Put in your team number (20).
+7. Check the `Enable Desktop Support` checkbox.
+8. Click `Generate Project`.
+9. Open the folder and trust all the authors.
 
 ## Modifying the project to fit our needs
 
-Copy the `eclipse-formatter.xml` file in the repo into your robot project.
+Copy the `eclipse-formatter.xml` file in the repo into your robot project. This file describes how the code should be formatted.
 
-Next you'll setup code formatting. Instructions for setup exist at https://docs.wpilib.org/en/latest/docs/software/advanced-gradlerio/code-formatting.html, but this will also have instructions for convenience.
+Next you'll setup code formatting in Gradle. Instructions for setup exist at https://docs.wpilib.org/en/latest/docs/software/advanced-gradlerio/code-formatting.html, but this will also have instructions for convenience.
 
-Go to `build.gradle` and copy and add spotless as a plugin by adding `id 'com.diffplug.spotless' version '6.20.0'` to the `plugins` block. The version will change over time, you can look at https://github.com/diffplug/spotless/blob/main/plugin-gradle/CHANGES.md for the latest version. The start of your `build.gradle` file should look like this (versions will be different):
+Go to `build.gradle` and copy and add spotless as a plugin by adding `id 'com.diffplug.spotless' version '7.0.2'` to the `plugins` block. The version will change over time, you can look at https://github.com/diffplug/spotless/blob/main/plugin-gradle/CHANGES.md for the latest version. The start of your `build.gradle` file should look like this (versions will be different):
+
 ```groovy
 plugins {
    	id "java"
    	id "edu.wpi.first.GradleRIO" version "2025.1.1"
-   	id 'com.diffplug.spotless' version '6.20.0'
+   	id 'com.diffplug.spotless' version '7.0.2'
 }
 ```
 
 Paste in this spotless block after the `plugins` block to configure spotless to format your code:
+
 ```gradle
 spotless {
     java {
@@ -64,6 +58,7 @@ spotless {
 After that, run the `spotlessApply` Gradle task to format everything. You can do this by opening up the Command Palette and using `WPILib: Run a command in Gradle` and inputting `spotlessApply`.
 
 Go to `settings.json` and paste this section in before the last curly brace (you'll need to put a comma on the line right before you paste this in):
+
 ```json
 	"C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Google, ColumnLimit: 0, IndentWidth: 4, TabWidth: 4, UseTab: ForIndentation}",
 	"editor.codeActionsOnSave": {
@@ -78,7 +73,8 @@ Go to `settings.json` and paste this section in before the last curly brace (you
 
 Also, add in `"edu.wpi.first.wpilibj2.command.Commands.*"` to the list under `java.completion.favoriteStaticMembers`. This will automatically cause inline command factory methods from the `Commands` class to show up in autocomplete without having to statically import them first. Subsystem inline command factory methods will still be prioritized, so you don't need to worry about selecting the wrong one.
 
-Your `settings.json` should look similar to this (it's fine if there's a few differences in the part that already existed, since that's WPILib's part):
+The modifications to `settings.json` enable code to be formatted on save and for imports to be organized and automatically handled for you. Your `settings.json` should look similar to this (it's fine if there's a few differences in the part that already existed, since that's WPILib's part):
+
 ```json
 {
 	"java.configuration.updateBuildConfiguration": "automatic",
@@ -153,6 +149,7 @@ Your `settings.json` should look similar to this (it's fine if there's a few dif
 	"java.sources.organizeImports.staticStarThreshold": 1
 }
 ```
+
 
 Copy the `build.yml` file in this repo to the `.github/workflows` directory. The path to the file should be `.github/workflows/build.yml`. This enables CI checks to be run on the repository, which is important to ensure that the code builds and is formatted properly. Once you publish the robot code repo, make sure you go to the Actions tab and enable workflows so they actually run.
 
