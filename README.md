@@ -61,6 +61,8 @@ spotless {
 }
 ```
 
+After that, run the `spotlessApply` Gradle task to format everything. You can do this by opening up the Command Palette and using `WPILib: Run a command in Gradle` and inputting `spotlessApply`.
+
 Go to `settings.json` and paste this section in before the last curly brace (you'll need to put a comma on the line right before you paste this in):
 ```json
 	"C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Google, ColumnLimit: 0, IndentWidth: 4, TabWidth: 4, UseTab: ForIndentation}",
